@@ -17,11 +17,14 @@ ActorManager::~ActorManager(void)
 void ActorManager::Load(GameInfo info)
 {
 	SetFactory(info);
+	if (actorFactory_)
+	{
 	for (auto& actor : actorFactory_->CreateActors())
 	{
 		actors_.push_back(std::move(actor));
 	}
 	//actors_.push_back(std::make_unique<FindingJRunner>(*this));
+	}
 
 	for(auto&a:actors_)
 	{

@@ -57,6 +57,7 @@ public:
 		ENTER,
 		SPACE,
 		TAB,
+		DEBUG_KEY_0,
 
 		MOUSE_LEFT,
 		MOUSE_RIGHT,

@@ -7,7 +7,9 @@
 
 #include"Scene/TitleScene.h"
 #include"Scene/PauseScene.h"
-
+#include"Scene/GameSelect/GameSelectScene.h"
+#include"Scene/GameScene/GameScene.h"
+#include"Scene/ResultScene.h"
 Application* Application::instance_ = nullptr;
 
 const std::string Application::PATH_DATA = "Data/";
@@ -86,7 +88,10 @@ void Application::Init(void)
 	// シーン管理初期化
 	SceneManager::CreateInstance();
 	SceneManager::GetInstance().SetSceneFactory(SCENE_ID::TITLE, []() { return std::make_shared<TitleScene>(); });
+	SceneManager::GetInstance().SetSceneFactory(SCENE_ID::GAME_SELECT, []() {return std::make_shared<GameSelectScene>(); });
+	SceneManager::GetInstance().SetSceneFactory(SCENE_ID::GAME, []() {return std::make_shared<GameScene>(); });
 	SceneManager::GetInstance().SetSceneFactory(SCENE_ID::PAUSE, []() {return std::make_shared<PauseScene>(); });
+	SceneManager::GetInstance().SetSceneFactory(SCENE_ID::RESULT, []() {return std::make_shared<ResultScene>(); });
 	SceneManager::GetInstance().Init();
 	// ネットワーク管理初期化
 }
