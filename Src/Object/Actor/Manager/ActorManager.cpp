@@ -4,7 +4,7 @@
 #include"../Factory/ActorFactoryBase.h"
 #include"../Collider/ColliderBase.h"
 #include"../../../Manager/Generic/KeyManager.h"
-
+#include"../Stage/Floor/Floor.h"
 ActorManager::ActorManager(void)
 {
 }
@@ -13,20 +13,26 @@ ActorManager::~ActorManager(void)
 {
 }
 
-
-void ActorManager::Load(GameInfo info)
+void ActorManager::Load(GameInfo info, CHARACTORKIND cKind)
 {
 	SetFactory(info);
 	if (actorFactory_)
 	{
-	for (auto& actor : actorFactory_->CreateActors())
-	{
-		actors_.push_back(std::move(actor));
+		switch (cKind)
+		{
+		case CHARACTORKIND::SWORDSMAN:
+			break;
+		default:
+			break;
+		}
+		for (auto& actor : actorFactory_->CreateActors())
+		{
+			actors_.push_back(std::move(actor));
+		}
 	}
-	//actors_.push_back(std::make_unique<FindingJRunner>(*this));
-	}
+	actors_.push_back(std::make_unique<Floor>());
 
-	for(auto&a:actors_)
+	for (auto& a : actors_)
 	{
 		a->Load();
 	}

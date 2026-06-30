@@ -3,6 +3,7 @@
 #include<vector>
 #include<memory>
 #include"../GameSelect/GameInfo.h"
+#include"../../Object/Actor/Charactor/Player/PlayerInfo.h"
 
 class ActorManager;
 class CollisionManager;
@@ -14,7 +15,7 @@ class GameScene :
 {
 public:
 	GameScene(void);
-	GameScene(GameInfo info);
+	GameScene(GameInfo info,CHARACTORKIND cKind);
 	~GameScene(void);
 
 	void SubLoad(void) override;
@@ -28,13 +29,15 @@ private:
 	void SetContactEventRule(void);
 	void SetContactEventCallback(void);
 	void SetCollisionCollback(void);
+	void CreateGame(GameInfo info);
 #pragma endregion
 
 #pragma region ïœêî
 	std::unique_ptr<ActorManager> actorMng_;
 	std::unique_ptr<CollisionManager>colMng_;
-	std::unique_ptr<GameBase> miniGame_;
+	std::unique_ptr<GameBase> game_;
 	GameInfo gameInfo_;
+	CHARACTORKIND charaKind_;
 #pragma endregion
 
 };

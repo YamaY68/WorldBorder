@@ -4,6 +4,7 @@ enum class SCENE_ID
 	NONE=-1,
 	TITLE,
 	GAME_SELECT,
+	PLAER_SELECT,
 	GAME,
 	RESULT,
 	

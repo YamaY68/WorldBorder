@@ -26,7 +26,7 @@ void GameSelectScene::SubUpdate(void)
 {
 	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::SPACE).down)
 	{
-		SceneManager::GetInstance().ChangeScene(SCENE_ID::GAME);
+		SceneManager::GetInstance().ChangeScene(SCENE_ID::PLAER_SELECT);
 	}
 }
 
