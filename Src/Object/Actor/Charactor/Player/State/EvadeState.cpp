@@ -42,10 +42,6 @@ void EvadeState::HandleInput(PlayerBase* owner)
 		{
 			owner->RequestLightAttack();
 		}
-		else	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::HEAVYACTION).down)
-		{
-			owner->RequestHeavyAttack();
-		}
 		else
 		{
 			owner->ChangeState<IdleState>();

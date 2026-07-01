@@ -139,6 +139,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\SwordsMan_BreakAttack.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\SwordsMan_FinishAttack.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\HeavyAttack\SwordsMan_HeavyAttack2.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\HeavyAttack\SwordsMan_HeavyAttack3.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\LightAttack\SwordsMan_LightAttack2.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\LightAttack\SwordsMan_LightAttack3.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\LightAttack\SwordsMan_LightAttack4.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\HeavyAttack\SwordsMan_HeavyAttack1.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\LightAttack\SwordsMan_LightAttack1.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Player\State\IdleState.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Player\State\ItemState.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Player\State\EvadeState.cpp" />
@@ -146,7 +155,7 @@
     <ClCompile Include="Src\Object\Actor\Charactor\Player\State\MoveState.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Player\State\ParryState.cpp" />
     <ClCompile Include="Src\Object\Actor\Charactor\Player\PlayerBase.cpp" />
-    <ClCompile Include="Src\Object\Actor\Charactor\Player\SowrdsMan\SowrdsMan.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Player\SowrdsMan\SwordsMan.cpp" />
     <ClCompile Include="Src\Scene\PlayerSelect\PlayerSelect.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage\Floor\Floor.cpp" />
     <ClCompile Include="Src\Scene\ResultScene.cpp" />
@@ -192,6 +201,16 @@
     <ClCompile Include="Src\Scene\GameScene\Game\TestGame\TestGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\SwordsMan_BreakAttack.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\SwordsMan_FinishAttack.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\HeavyAttack\SwordsMan_HeavyAttack2.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\HeavyAttack\SwordsMan_HeavyAttack3.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\LightAttack\SwordsMan_LightAttack2.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\LightAttack\SwordsMan_LightAttack3.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\LightAttack\SwordsMan_LightAttack4.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\SwordsMan_AttackHeaders.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\HeavyAttack\SwordsMan_HeavyAttack1.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\SowrdsMan\State\LightAttack\SwordsMan_LightAttack1.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Player\State\IdleState.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Player\State\ItemState.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Player\State\CommonStates.h" />
@@ -202,7 +221,7 @@
     <ClInclude Include="Src\Object\Actor\Charactor\IState.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Player\PlayerBase.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Player\PlayerActionInfo.h" />
-    <ClInclude Include="Src\Object\Actor\Charactor\Player\SowrdsMan\SowrdsMan.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\SowrdsMan\SwordsMan.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Player\PlayerInfo.h" />
     <ClInclude Include="Src\Scene\PlayerSelect\PlayerSelect.h" />
     <ClInclude Include="Src\Object\Actor\Stage\Floor\Floor.h" />

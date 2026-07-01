@@ -5,6 +5,7 @@
 #include"State/GuardState.h"
 #include"State/MoveState.h"
 #include"State/ParryState.h"
+#include"State/IdleState.h"
 
 PlayerBase::PlayerBase(void)
 {
@@ -20,6 +21,7 @@ void PlayerBase::SubLoad(void)
 	AddState(std::make_unique<GuardState>());
 	AddState(std::make_unique<EvadeState>());
 	AddState(std::make_unique<ParryState>());
+	AddState(std::make_unique<IdleState>());
 }
 
 void PlayerBase::SubInit(void)

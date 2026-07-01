@@ -15,7 +15,6 @@ public:
 	virtual void Update(CharactorBase* owner) = 0;
 
 	virtual void Exit(CharactorBase* owner) = 0;
-
 protected:
 	bool canChange_ = false;
 };

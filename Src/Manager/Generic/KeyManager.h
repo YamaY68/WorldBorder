@@ -28,7 +28,9 @@ public:
 		PARRY,
 		GUARD,
 		LIGHTATTACK,
-		HEAVYACTION,
+		HEAVYATTACK,
+		FINISH,
+		BREAK,
 		ITEM,
 		//--------------
 

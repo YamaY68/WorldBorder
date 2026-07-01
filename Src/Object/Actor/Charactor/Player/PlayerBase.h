@@ -7,16 +7,16 @@ public:
 	PlayerBase(void);
 	~PlayerBase(void);
 
-	void SubLoad(void) override;
-	void SubInit(void) override;
-	void SubUpdate(void) override;
-	void SubDraw(void) override;
-	void SubRelease(void) override;
+	virtual void SubLoad(void) override;
+	virtual void SubInit(void) override;
+	virtual void SubUpdate(void) override;
+	virtual void SubDraw(void) override;
+	virtual void SubRelease(void) override;
 
-	void InitCollider(void) override;
+	virtual void InitCollider(void) override;
 	virtual void RequestLightAttack(void) = 0;
-	virtual void RequestHeavyAttack(void) = 0;
-private:
+protected:
+	virtual void ReturnToIdle(void) = 0;
 	virtual void CreateAttack(void)=0;
 };
 
