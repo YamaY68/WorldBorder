@@ -139,6 +139,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Object\Actor\Charactor\Player\State\IdleState.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Player\State\ItemState.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Player\State\EvadeState.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Player\State\GuardState.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Player\State\MoveState.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Player\State\ParryState.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Player\PlayerBase.cpp" />
+    <ClCompile Include="Src\Object\Actor\Charactor\Player\SowrdsMan\SowrdsMan.cpp" />
     <ClCompile Include="Src\Scene\PlayerSelect\PlayerSelect.cpp" />
     <ClCompile Include="Src\Object\Actor\Stage\Floor\Floor.cpp" />
     <ClCompile Include="Src\Scene\ResultScene.cpp" />
@@ -184,6 +192,17 @@
     <ClCompile Include="Src\Scene\GameScene\Game\TestGame\TestGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\State\IdleState.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\State\ItemState.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\State\CommonStates.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\State\EvadeState.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\State\GuardState.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\State\MoveState.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\State\ParryState.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\IState.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\PlayerBase.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\PlayerActionInfo.h" />
+    <ClInclude Include="Src\Object\Actor\Charactor\Player\SowrdsMan\SowrdsMan.h" />
     <ClInclude Include="Src\Object\Actor\Charactor\Player\PlayerInfo.h" />
     <ClInclude Include="Src\Scene\PlayerSelect\PlayerSelect.h" />
     <ClInclude Include="Src\Object\Actor\Stage\Floor\Floor.h" />

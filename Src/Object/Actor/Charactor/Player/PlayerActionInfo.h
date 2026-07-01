@@ -1,0 +1,27 @@
+#pragma once
+
+enum class Action
+{
+	//çsìÆ
+	MOVE,	//à⁄ìÆ
+	EVADE,	//âÒî
+	PARRY,
+	GUARD,
+
+	ITEM_1,
+	ITEM_2,
+	ITEM_3,
+
+	//çUåÇ
+	LIGHTATTACK_1,
+	LIGHTATTACK_2,
+	LIGHTATTACK_3,
+	LIGHTATTACK_4,
+
+	HEAVYATTACK_1,
+	HEAVYATTACK_2,
+	HEAVYATTACK_3,
+
+	FINISH,
+	BREAK,
+};

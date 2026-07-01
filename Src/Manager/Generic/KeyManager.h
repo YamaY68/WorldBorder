@@ -23,6 +23,15 @@ public:
 	{
 		NON = -1,
 
+		//ÉvÉåÉCÉÑÅ[ÇÃëÄçÏ
+		EVADE,
+		PARRY,
+		GUARD,
+		LIGHTATTACK,
+		HEAVYACTION,
+		ITEM,
+		//--------------
+
 		MOVE_FRONT,
 		MOVE_BACK,
 		MOVE_RIGHT,

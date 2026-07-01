@@ -1,5 +1,11 @@
 #pragma once
 #include "../ActorBase.h"
+#include<map>
+#include<memory>
+#include <typeindex>
+#include <unordered_map>
+#include"IState.h"
+
 class CharactorBase :
     public ActorBase
 {
@@ -15,9 +21,35 @@ public:
 
 	void InitCollider(void) override;
 
-	void SetPlayNumber(int n) { playNumber_ = n; }
-private:
-	virtual void MoveInput(void) {};
+	void ChangeState(IState* newState);
+
+	template<typename T>
+	void AddState(std::unique_ptr<T>state);
+	
+	template<typename T>
+	void ChangeState(void);
+
+protected:
+	virtual void SetState(void) {};
 	int playNumber_;
+	std::unordered_map<std::type_index, std::unique_ptr<IState>>stateMap_;
+	IState* currentState_=nullptr;
 };
 
+template<typename T>
+inline void CharactorBase::AddState(std::unique_ptr<T> state)
+{
+	stateMap_[typeid(T)] = std::move(state);
+}
+
+template<typename T>
+inline void CharactorBase::ChangeState(void)
+{
+	auto it = stateMap_.find(typeid(T));
+	if (it != stateMap_.end())
+	{
+		if (currentState_)currentState_->Exit(this);
+		currentState_ = it->second.get();
+		currentState_->Enter(this);
+	}
+}
