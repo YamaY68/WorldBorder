@@ -89,7 +89,12 @@ public:
 
 	void SetCameraAngles(const VECTOR& angles) { angles_ = angles; }
 	void SetCameraPos(const VECTOR& pos) { trans_.pos = pos; }
+
+	void CameraMoveStop(void){
+		isMoveStop_ = true;
+	}
 private:
+	bool isMoveStop_ = false;
 
 	// ƒJƒƒ‰‚ª’Ç]‘ÎÛ‚Æ‚·‚éTransform
 	const Transform* followTransform_;

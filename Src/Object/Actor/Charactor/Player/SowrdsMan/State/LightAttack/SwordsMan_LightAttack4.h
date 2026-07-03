@@ -3,10 +3,10 @@
 
 class SwordsMan_LightAttack4 :public IState
 {
-	public:
-	void Enter(CharactorBase* owner) override;
-	void HandleInput(PlayerBase* owner) override;
-	void Update(CharactorBase* owner) override;
-	void Exit(CharactorBase* owner) override;
+public:
+    void Enter(CharactorBase* owner) override;
+    void HandleInput(PlayerBase* owner) override;
+    void Update(CharactorBase* owner) override;
+    void Exit(CharactorBase* owner) override;
 };
 

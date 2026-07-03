@@ -5,6 +5,7 @@
 #include"../Collider/ColliderBase.h"
 #include"../../../Manager/Generic/KeyManager.h"
 #include"../Stage/Floor/Floor.h"
+#include"../Factory/Test/TestFactory.h"
 ActorManager::ActorManager(void)
 {
 }
@@ -30,7 +31,6 @@ void ActorManager::Load(GameInfo info, CHARACTORKIND cKind)
 			actors_.push_back(std::move(actor));
 		}
 	}
-	actors_.push_back(std::make_unique<Floor>());
 
 	for (auto& a : actors_)
 	{
@@ -146,6 +146,6 @@ void ActorManager::BindID2Kind(void)
 
 void ActorManager::SetFactory(GameInfo info)
 {
-
+	actorFactory_ = std::make_unique<TestFactory>();
 }
 

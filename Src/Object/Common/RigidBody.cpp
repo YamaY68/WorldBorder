@@ -12,7 +12,7 @@ RigidBody::RigidBody(void)
 	useGravity_ = false; // 重力を使用する
 	isGrounded_ = false; // 地面に接していない
 	useRotation_ = false;
-	moveSpeed_ = 5.0f; // 移動速度のデフォルト値
+	moveSpeed_ = 1.0f; // 移動速度のデフォルト値
 	jumpForce_ = 10.0f; // ジャンプ力のデフォルト値
 	maxMoveSpeed_ = 10.0f; // 最大移動速度のデフォルト値
 }

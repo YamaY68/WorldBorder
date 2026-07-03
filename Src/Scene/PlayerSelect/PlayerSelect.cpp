@@ -32,7 +32,7 @@ void PlayerSelect::SubUpdate(void)
 {
 	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::SPACE).down)
 	{
-		SceneManager::GetInstance().ChangeScene(SCENE_ID::GAME);
+		SceneManager::GetInstance().ChangeScene<GameScene>(gameInfo_,CHARACTORKIND::SWORDSMAN);
 	}
 }
 

@@ -14,18 +14,25 @@ SwordsMan::~SwordsMan(void)
 
 void SwordsMan::SubLoad(void)
 {
+	CreateAttack();
+	ChangeState<IdleState>();
+	PlayerBase::SubLoad();
 }
 
 void SwordsMan::SubInit(void)
 {
+	PlayerBase::SubInit();
 }
 
 void SwordsMan::SubUpdate(void)
 {
+	PlayerBase::SubUpdate();
 }
 
 void SwordsMan::SubDraw(void)
 {
+	PlayerBase::SubDraw();
+	DrawFormatString(0, 10, 0xffffff, "State:%s", currentState_->GetName());
 }
 
 void SwordsMan::SubRelease(void)
@@ -46,13 +53,14 @@ void SwordsMan::InitCollider(void)
 	ownColliders_.emplace(static_cast<int>(info.shape_), std::move(collider));
 }
 
+void SwordsMan::InitRigidBody(void)
+{
+	rigidBody_.SetUseGravity(true);
+}
+
 void SwordsMan::RequestLightAttack(void)
 {
 	ChangeState<SwordsMan_LightAttack1>();
-}
-void SwordsMan::ReturnToIdle(void)
-{
-	ChangeState<IdleState>();
 }
 
 void SwordsMan::CreateAttack(void)

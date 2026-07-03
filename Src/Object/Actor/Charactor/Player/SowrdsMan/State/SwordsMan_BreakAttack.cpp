@@ -1,5 +1,4 @@
 #include "SwordsMan_BreakAttack.h"
-
 void SwordsMan_BreakAttack::Enter(CharactorBase* owner)
 {
 }

@@ -58,6 +58,10 @@ void GameScene::SubUpdate(void)
 	{
 		SceneManager::GetInstance().ChangeScene(SCENE_ID::RESULT);
 	}
+	if(KEY::GetIns().GetInfo(KEY::KEY_TYPE::TAB).down)
+	{
+		SceneManager::GetInstance().GetCamera().CameraMoveStop();
+	}
 }
 
 void GameScene::SubDraw(void)

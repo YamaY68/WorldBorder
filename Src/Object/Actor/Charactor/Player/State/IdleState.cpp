@@ -13,16 +13,14 @@ void IdleState::Enter(CharactorBase* owner)
 
 void IdleState::HandleInput(PlayerBase* owner)
 {
-	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_FRONT).down ||
-		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_LEFT).down ||
-		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_BACK).down ||
-		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_RIGHT).down)
+	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_FRONT).now ||
+		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_LEFT).now ||
+		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_BACK).now ||
+		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_RIGHT).now)
 	{
 		owner->ChangeState<MoveState>();
-	}else	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::EVADE).down)
-	{
-		owner->ChangeState<EvadeState>();
-	}else	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::GUARD).down)
+	}
+	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::GUARD).now)
 	{
 		owner->ChangeState<GuardState>();
 	}else	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::ITEM).down)
@@ -31,10 +29,6 @@ void IdleState::HandleInput(PlayerBase* owner)
 	}else	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::LIGHTATTACK).down)
 	{
 		owner->RequestLightAttack();
-	}
-	else
-	{
-		owner->ChangeState<IdleState>();
 	}
 }
 

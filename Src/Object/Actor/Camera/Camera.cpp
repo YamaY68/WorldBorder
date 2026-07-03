@@ -196,7 +196,6 @@ void Camera::ProcessRot(bool isLimit)
 
 void Camera::ProcessMove(void)
 {
-
 	auto& ins = KEY::GetIns();
 
 	VECTOR moveDir = AsoUtility::VECTOR_ZERO;
@@ -248,6 +247,7 @@ void Camera::SetBeforeDrawFixedPoint(void)
 
 void Camera::SetBeforeDrawFree(void)
 {
+	if (isMoveStop_)return;
 
 	 //ƒJƒƒ‰‘€ì(‰ñ“])
 	ProcessRot(false);

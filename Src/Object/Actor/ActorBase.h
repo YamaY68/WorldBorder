@@ -3,10 +3,14 @@
 #include<memory>
 #include<vector>
 #include<map>
+
+
+
 #include"../Common/Transform.h"
 #include"../Common/RigidBody.h"
 #include"EntityKind.h"
 #include"Collider/ColliderInfo.h"
+
 
 class AnimationController;
 class ColliderBase;
@@ -50,6 +54,8 @@ public:
 	bool IsDraw(void) const { return isDraw_; }
 	//描画状態設定
 	void SetIsDraw(bool isDraw) { isDraw_ = isDraw; }
+
+
 protected:
 #pragma region 関数
 	virtual void SubLoad(void) {};
@@ -59,7 +65,7 @@ protected:
 	virtual void SubRelease(void) {};
 
 	virtual void InitCollider(void) {};
-
+	virtual void InitRigidBody(void) {};
 	void Move(void);
 #pragma endregion
 
@@ -80,5 +86,7 @@ protected:
 	bool isActive_;
 	//自身のコライダーリスト
 	std::map<int, std::unique_ptr<ColliderBase>> ownColliders_;
+
 #pragma endregion
 };
+

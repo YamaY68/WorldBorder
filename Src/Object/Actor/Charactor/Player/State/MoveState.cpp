@@ -9,12 +9,16 @@
 
 void MoveState::Enter(CharactorBase* owner)
 {
+	isLoop_ = true;
+
 }
 
 void MoveState::HandleInput(PlayerBase* owner)
 {
 	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::EVADE).down)
 	{
+		auto* evateState = dynamic_cast<EvadeState*>(owner->GetState<EvadeState>());
+		evateState->SetEvadeDirection(moveVec_);
 		owner->ChangeState<EvadeState>();
 	}else	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::GUARD).down)
 	{
@@ -25,6 +29,13 @@ void MoveState::HandleInput(PlayerBase* owner)
 	}else	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::LIGHTATTACK).down)
 	{
 		owner->RequestLightAttack();
+	}
+
+	if(KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_FRONT).now||
+		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_RIGHT).now||
+		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_BACK).now||
+		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_LEFT).now)
+	{
 	}
 	else
 	{
@@ -49,6 +60,7 @@ void MoveState::Update(CharactorBase* owner)
 	{
 		moveVec = VNorm(moveVec);
 	}
+	moveVec_ = moveVec;
 	owner->GetTransform().pos = VAdd(owner->GetTransform().pos, VScale(moveVec, owner->GetRigidBody().GetMoveSpeed()));
 }
 

@@ -9,16 +9,17 @@
 
 void GuardState::Enter(CharactorBase* owner)
 {
+	isLoop_ = true;
 }
 
 void GuardState::HandleInput(PlayerBase* owner)
 {
  if (canChange_)
 	{
-		if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_FRONT).down ||
-			KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_LEFT).down ||
-			KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_BACK).down ||
-			KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_RIGHT).down)
+		if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_FRONT).now ||
+			KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_LEFT).now ||
+			KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_BACK).now ||
+			KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_RIGHT).now)
 		{
 			owner->ChangeState<MoveState>();
 		}
@@ -47,6 +48,26 @@ void GuardState::HandleInput(PlayerBase* owner)
 
 void GuardState::Update(CharactorBase* owner)
 {
+	if(KEY::GetIns().GetInfo(KEY::KEY_TYPE::GUARD).now)
+	{
+		canChange_ = false;
+		if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::PARRY).down)
+		{
+			owner->ChangeState<ParryState>();
+		}
+		else if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::EVADE).down)
+		{
+			owner->ChangeState<EvadeState>();
+		}
+		else if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::ITEM).down)
+		{
+			owner->ChangeState<ItemState>();
+		}
+	}
+	else
+	{
+		canChange_ = true;
+	}
 }
 
 void GuardState::Exit(CharactorBase* owner)

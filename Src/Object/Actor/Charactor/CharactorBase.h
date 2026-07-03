@@ -19,21 +19,23 @@ public:
 	virtual void SubDraw(void) override;
 	virtual void SubRelease(void) override;
 
-	virtual void InitCollider(void) override;
-
 	void ChangeState(IState* newState);
 
 	template<typename T>
 	void AddState(std::unique_ptr<T>state);
-	
+
 	template<typename T>
 	void ChangeState(void);
 
-protected:
+	template<typename T>
+	T* GetState(void);
+
 	virtual void SetState(void) {};
+	virtual void InitCollider(void) override;
+protected:
 	int playNumber_;
 	std::unordered_map<std::type_index, std::unique_ptr<IState>>stateMap_;
-	IState* currentState_=nullptr;
+	IState* currentState_ = nullptr;
 };
 
 template<typename T>
@@ -52,4 +54,14 @@ inline void CharactorBase::ChangeState(void)
 		currentState_ = it->second.get();
 		currentState_->Enter(this);
 	}
+}
+
+template<typename T>
+inline T* CharactorBase::GetState(void)
+{
+	auto it = stateMap_.find(typeid(T));
+	if (it != stateMap_.end()) {
+		return dynamic_cast<T*>(it->second.get());
+	}
+	return nullptr;
 }

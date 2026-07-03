@@ -1,6 +1,6 @@
 #pragma once
 #include "../../IState.h"
-#include "../../IState.h"
+
 class ItemState :
     public IState
 {

@@ -5,7 +5,7 @@
 #include "../../Manager/Generic/KeyManager.h"
 #include"../../Manager/Game/SceneManager.h"
 #include"../GameScene/GameScene.h"
-
+#include"../PlayerSelect/PlayerSelect.h"
 GameSelectScene::GameSelectScene(void)
 {
 }
@@ -26,7 +26,7 @@ void GameSelectScene::SubUpdate(void)
 {
 	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::SPACE).down)
 	{
-		SceneManager::GetInstance().ChangeScene(SCENE_ID::PLAER_SELECT);
+		SceneManager::GetInstance().ChangeScene<PlayerSelect>(static_cast<GameInfo>(STAGE_NUM::TEST));
 	}
 }
 

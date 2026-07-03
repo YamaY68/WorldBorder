@@ -4,9 +4,14 @@
 #include"../../../PlayerBase.h"
 #include"../../../../CharactorBase.h"
 #include"../SwordsMan_AttackHeaders.h"
+#include"../../../State/CommonStates.h"
 
 void SwordsMan_LightAttack4::Enter(CharactorBase* owner)
 {
+	idleTime_ = 120;
+	stateFrame_ = 0;
+	canChange_ = false;
+	nextInputStartTime_ = 60;
 }
 
 void SwordsMan_LightAttack4::HandleInput(PlayerBase* owner)
@@ -16,6 +21,10 @@ void SwordsMan_LightAttack4::HandleInput(PlayerBase* owner)
 		if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::FINISH).down)
 		{
 			owner->ChangeState<SwordsMan_FinishAttack>();
+		}
+		if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::EVADE).down)
+		{
+			owner->ChangeState<EvadeState>();
 		}
 	}
 }

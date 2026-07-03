@@ -1,5 +1,6 @@
 #pragma once
 #include "../../IState.h"
+
 class IdleState :
     public IState
 {

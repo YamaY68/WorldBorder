@@ -14,10 +14,10 @@ public:
 	void SubRelease(void) override;
 
 	void InitCollider(void) override;
+	void InitRigidBody(void) override;
 
 	void RequestLightAttack(void)override;
 private:
-	void ReturnToIdle(void)override;
 	void CreateAttack(void)override;
 };
 
