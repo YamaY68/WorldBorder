@@ -7,6 +7,9 @@
 #include"../../CharactorBase.h"
 #include"../PlayerBase.h"
 #include"CommonStates.h"
+#include"../../../../Common/AnimationController.h"
+#include"../SowrdsMan/SwordsMan.h"
+
 EvadeState::~EvadeState(void)
 {
 }
@@ -17,6 +20,7 @@ void EvadeState::Enter(CharactorBase* owner)
 	stateFrame_ = 0;
 	canChange_ = false;
 	nextInputStartTime_ = 60;
+	owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::EVADE);
 }
 
 void EvadeState::HandleInput(PlayerBase* owner)

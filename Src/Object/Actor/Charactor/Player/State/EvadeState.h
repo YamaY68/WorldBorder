@@ -1,6 +1,8 @@
 #pragma once
 #include "../../IState.h"
 #include<DxLib.h>
+
+
 class EvadeState :
     public IState
 {
@@ -12,6 +14,6 @@ public:
     void Exit(CharactorBase* owner) override;
     void SetEvadeDirection(const VECTOR& direction) { evadeDirection_ = direction; }
 private:
-    VECTOR evadeDirection_ = { 0.0f,0.0f,0.0f };
+    VECTOR evadeDirection_ = { 0.0f,0.0f,0.0f };    
 };
 

@@ -17,7 +17,7 @@ public:
 	virtual void RequestLightAttack(void) = 0;
 
 protected:
-	virtual void ReturnToIdle(void);
+	virtual void ReturnToIdle(void) {};
 	virtual void CreateAttack(void)=0;
 };
 

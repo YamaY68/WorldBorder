@@ -2,12 +2,15 @@
 #include"../../../State/CommonStates.h"
 #include"../../../../../../../Manager/Generic/KeyManager.h"
 #include"../../../PlayerBase.h"
+#include"../../../../../../Common/AnimationController.h"
+#include"../../../SowrdsMan/SwordsMan.h"
 void SwordsMan_HeavyAttack2::Enter(CharactorBase* owner)
 {
 	idleTime_ = 120;
 	stateFrame_ = 0;
 	canChange_ = false;
 	nextInputStartTime_ = 60;
+	owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::HEAVY_ATTACK_2);
 }
 
 void SwordsMan_HeavyAttack2::HandleInput(PlayerBase* owner)

@@ -6,11 +6,12 @@
 #include"../../CharactorBase.h"
 #include"../PlayerBase.h"
 #include"CommonStates.h"
-
+#include"../../../../Common/AnimationController.h"
+#include"../SowrdsMan/SwordsMan.h"
 void MoveState::Enter(CharactorBase* owner)
 {
 	isLoop_ = true;
-
+	owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::RUN);
 }
 
 void MoveState::HandleInput(PlayerBase* owner)
@@ -61,6 +62,7 @@ void MoveState::Update(CharactorBase* owner)
 		moveVec = VNorm(moveVec);
 	}
 	moveVec_ = moveVec;
+	owner->GetTransform().quaRot = Quaternion::Euler(VGet(0, atan2f(moveVec.x, moveVec.z), 0.0f));
 	owner->GetTransform().pos = VAdd(owner->GetTransform().pos, VScale(moveVec, owner->GetRigidBody().GetMoveSpeed()));
 }
 

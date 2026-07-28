@@ -2,6 +2,8 @@
 #include"../../../State/CommonStates.h"
 #include"../../../../../../../Manager/Generic/KeyManager.h"
 #include"../../../PlayerBase.h"
+#include"../../../../../../Common/AnimationController.h"
+#include"../../../SowrdsMan/SwordsMan.h"
 
 void SwordsMan_HeavyAttack1::Enter(CharactorBase* owner)
 {
@@ -9,6 +11,7 @@ void SwordsMan_HeavyAttack1::Enter(CharactorBase* owner)
 	stateFrame_ = 0;
 	canChange_ = false;
 	nextInputStartTime_ = 60;
+	owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::HEAVY_ATTACK_1);
 }
 
 void SwordsMan_HeavyAttack1::HandleInput(PlayerBase* owner)

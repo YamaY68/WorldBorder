@@ -17,14 +17,7 @@ PlayerBase::~PlayerBase(void)
 
 void PlayerBase::SubLoad(void)
 {
-	AddState(std::make_unique<MoveState>());
-	AddState(std::make_unique<GuardState>());
-	AddState(std::make_unique<EvadeState>());
-	AddState(std::make_unique<ParryState>());
-	AddState(std::make_unique<IdleState>());
-	AddState(std::make_unique<ItemState>());
 	CharactorBase::SubLoad();
-	ChangeState<IdleState>();
 }
 
 void PlayerBase::SubInit(void)
@@ -59,9 +52,4 @@ void PlayerBase::SubRelease(void)
 
 void PlayerBase::InitCollider(void)
 {
-}
-
-void PlayerBase::ReturnToIdle(void)
-{
-	ChangeState<IdleState>();
 }

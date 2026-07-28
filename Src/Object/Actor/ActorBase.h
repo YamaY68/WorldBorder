@@ -54,8 +54,8 @@ public:
 	bool IsDraw(void) const { return isDraw_; }
 	//描画状態設定
 	void SetIsDraw(bool isDraw) { isDraw_ = isDraw; }
-
-
+	
+	AnimationController* GetAnimationController(void) { return animationController_.get(); }
 protected:
 #pragma region 関数
 	virtual void SubLoad(void) {};
@@ -64,6 +64,7 @@ protected:
 	virtual void SubDraw(void) {};
 	virtual void SubRelease(void) {};
 
+	virtual void LoadAnimation(void) {};
 	virtual void InitCollider(void) {};
 	virtual void InitRigidBody(void) {};
 	void Move(void);
@@ -86,7 +87,7 @@ protected:
 	bool isActive_;
 	//自身のコライダーリスト
 	std::map<int, std::unique_ptr<ColliderBase>> ownColliders_;
-
+	float slowTime_ = 1.0f;		//１で等倍
 #pragma endregion
 };
 

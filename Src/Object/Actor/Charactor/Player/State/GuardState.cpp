@@ -6,10 +6,13 @@
 #include"../../CharactorBase.h"
 #include"../PlayerBase.h"
 #include"CommonStates.h"
+#include"../../../../Common/AnimationController.h"
+#include"../SowrdsMan/SwordsMan.h"
 
 void GuardState::Enter(CharactorBase* owner)
 {
 	isLoop_ = true;
+	owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::GUARD);
 }
 
 void GuardState::HandleInput(PlayerBase* owner)

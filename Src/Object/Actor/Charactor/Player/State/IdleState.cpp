@@ -6,9 +6,11 @@
 #include"../../CharactorBase.h"
 #include"../PlayerBase.h"
 #include"CommonStates.h"
-
+#include"../../../../Common/AnimationController.h"
+#include"../SowrdsMan/SwordsMan.h"
 void IdleState::Enter(CharactorBase* owner)
 {
+	owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::IDLE);
 }
 
 void IdleState::HandleInput(PlayerBase* owner)

@@ -5,13 +5,15 @@
 #include"../../../../CharactorBase.h"
 #include"../SwordsMan_AttackHeaders.h"
 #include"../../../State/CommonStates.h"
-
+#include"../../../../../../Common/AnimationController.h"
+#include"../../../SowrdsMan/SwordsMan.h"
 void SwordsMan_LightAttack3::Enter(CharactorBase* owner)
 {
 	idleTime_ = 120;
 	stateFrame_ = 0;
 	canChange_ = false;
 	nextInputStartTime_ = 60;
+	owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::LIGHT_ATTACK_3);
 }
 
 void SwordsMan_LightAttack3::HandleInput(PlayerBase* owner)
