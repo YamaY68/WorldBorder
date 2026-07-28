@@ -24,7 +24,10 @@ void SwordsMan_HeavyAttack3::HandleInput(PlayerBase* owner)
 
 void SwordsMan_HeavyAttack3::Update(CharactorBase* owner)
 {
-
+	if (owner->GetAnimationController()->IsEnd())
+	{
+		owner->ChangeState<IdleState>();
+	}
 }
 
 void SwordsMan_HeavyAttack3::Exit(CharactorBase* owner)

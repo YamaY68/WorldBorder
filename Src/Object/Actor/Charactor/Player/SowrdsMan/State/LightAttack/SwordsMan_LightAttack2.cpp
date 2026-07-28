@@ -9,7 +9,7 @@
 #include"../../../SowrdsMan/SwordsMan.h"
 void SwordsMan_LightAttack2::Enter(CharactorBase* owner)
 {
-	idleTime_ = 120;
+	idleTime_ = 180;
 	stateFrame_ = 0;
 	canChange_ = false;
 	nextInputStartTime_ = 60;
@@ -41,6 +41,10 @@ void SwordsMan_LightAttack2::HandleInput(PlayerBase* owner)
 
 void SwordsMan_LightAttack2::Update(CharactorBase* owner)
 {
+	if (owner->GetAnimationController()->IsEnd())
+	{
+		owner->ChangeState<IdleState>();
+	}
 }
 
 void SwordsMan_LightAttack2::Exit(CharactorBase* owner)

@@ -61,13 +61,13 @@ void SwordsMan::LoadAnimation(void)
 	animationController_->Add((int)ANIM_TYPE::LEFT_STRAFE_RUN, 30, ANIM_PATH + "LeftStrafeRun.mv1");
 	animationController_->Add((int)ANIM_TYPE::RIGHT_STRAFE_WALK, 30, ANIM_PATH + "RightStrafeWalk.mv1");
 	animationController_->Add((int)ANIM_TYPE::RIGHT_STRAFE_RUN, 30, ANIM_PATH + "RightStrafeRun.mv1");
-	animationController_->Add((int)ANIM_TYPE::LIGHT_ATTACK_1, 30, ANIM_PATH + "LightAttack/LightAttack1.mv1");
-	animationController_->Add((int)ANIM_TYPE::LIGHT_ATTACK_2, 30, ANIM_PATH + "LightAttack/LightAttack2.mv1");
-	animationController_->Add((int)ANIM_TYPE::LIGHT_ATTACK_3, 30, ANIM_PATH + "LightAttack/LightAttack3.mv1");
-	animationController_->Add((int)ANIM_TYPE::LIGHT_ATTACK_4, 30, ANIM_PATH + "LightAttack/LightAttack4.mv1");
-	animationController_->Add((int)ANIM_TYPE::HEAVY_ATTACK_1, 30, ANIM_PATH + "HeavyAttack/HeavyAttack1.mv1");
-	animationController_->Add((int)ANIM_TYPE::HEAVY_ATTACK_2, 30, ANIM_PATH + "HeavyAttack/HeavyAttack2.mv1");
-	animationController_->Add((int)ANIM_TYPE::HEAVY_ATTACK_3, 30, ANIM_PATH + "HeavyAttack/HeavyAttack3.mv1");
+	animationController_->Add((int)ANIM_TYPE::LIGHT_ATTACK_1, 60, ANIM_PATH + "LightAttack/LightAttack1.mv1");
+	animationController_->Add((int)ANIM_TYPE::LIGHT_ATTACK_2, 60, ANIM_PATH + "LightAttack/LightAttack2.mv1");
+	animationController_->Add((int)ANIM_TYPE::LIGHT_ATTACK_3, 60, ANIM_PATH + "LightAttack/LightAttack3.mv1");
+	animationController_->Add((int)ANIM_TYPE::LIGHT_ATTACK_4, 60, ANIM_PATH + "LightAttack/LightAttack4.mv1");
+	animationController_->Add((int)ANIM_TYPE::HEAVY_ATTACK_1, 60, ANIM_PATH + "HeavyAttack/HeavyAttack1.mv1");
+	animationController_->Add((int)ANIM_TYPE::HEAVY_ATTACK_2, 60, ANIM_PATH + "HeavyAttack/HeavyAttack2.mv1");
+	animationController_->Add((int)ANIM_TYPE::HEAVY_ATTACK_3, 60, ANIM_PATH + "HeavyAttack/HeavyAttack3.mv1");
 }
 
 
