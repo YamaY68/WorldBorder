@@ -16,11 +16,19 @@ EvadeState::~EvadeState(void)
 
 void EvadeState::Enter(CharactorBase* owner)
 {
-	idleTime_ = 40;
+	if (AsoUtility::Equals(evadeDirection_,SceneManager::GetInstance().GetCamera().GetForward())||AsoUtility::EqualsVZero(evadeDirection_))
+	{
+		owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::BACK_EVADE, false);
+	}
+	else
+	{
+	owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::EVADE,false);
+	}
+	owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::BACK_EVADE, 2);
+	owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::EVADE, 2);
 	stateFrame_ = 0;
 	canChange_ = false;
 	nextInputStartTime_ = 60;
-	owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::EVADE);
 }
 
 void EvadeState::HandleInput(PlayerBase* owner)
@@ -31,9 +39,10 @@ void EvadeState::HandleInput(PlayerBase* owner)
 void EvadeState::Update(CharactorBase* owner)
 {
 	auto& pos = owner->GetTransform().pos;
-	if (AsoUtility::Equals(evadeDirection_, owner->GetTransform().GetForward()))
+	if (AsoUtility::Equals(evadeDirection_, SceneManager::GetInstance().GetCamera().GetForward()))
 	{
-		pos = VAdd(pos, VScale(VScale(evadeDirection_,-1), 1.2));
+		auto f=owner->GetTransform().GetForward();
+		pos = VAdd(pos, VScale(VScale(owner->GetTransform().GetForward(), -1), 1.2));
 		if (stateFrame_ < 20)
 		{
 		owner->GetRigidBody().AddForce({ 0.0f,2.0f,0.0f });
@@ -54,7 +63,11 @@ void EvadeState::Update(CharactorBase* owner)
 		{
 			owner->GetRigidBody().AddForce({ 0.0f,-1.0f,0.0f });
 		}
-		pos = VAdd(pos, VScale(evadeDirection_, 1.2));
+		pos = VAdd(pos, VScale(evadeDirection_, 1.8));
+	}
+	if (owner->GetAnimationController()->IsEnd())
+	{
+		owner->ChangeState<IdleState>();
 	}
 }
 

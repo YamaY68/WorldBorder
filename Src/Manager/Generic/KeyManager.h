@@ -67,6 +67,7 @@ public:
 		PAUSE,
 		ENTER,
 		SPACE,
+		SHIFT,
 		TAB,
 		DEBUG_KEY_0,
 

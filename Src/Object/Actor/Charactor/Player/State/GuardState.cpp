@@ -71,6 +71,7 @@ void GuardState::Update(CharactorBase* owner)
 	{
 		canChange_ = true;
 	}
+
 }
 
 void GuardState::Exit(CharactorBase* owner)

@@ -1,5 +1,6 @@
 #include "MoveState.h"
 #include<DxLib.h>
+#include"../../../../../Utility/AsoUtility.h"
 #include"../../../../../Manager/Generic/KeyManager.h"
 #include"../../../../../Manager/Game/SceneManager.h"
 #include"../../../Camera/Camera.h"
@@ -19,24 +20,46 @@ void MoveState::HandleInput(PlayerBase* owner)
 	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::EVADE).down)
 	{
 		auto* evateState = dynamic_cast<EvadeState*>(owner->GetState<EvadeState>());
+		if (AsoUtility::Equals(owner->GetTransform().GetForward(), SceneManager::GetInstance().GetCamera().GetForward()))
+		{
+			return;
+		}
 		evateState->SetEvadeDirection(moveVec_);
 		owner->ChangeState<EvadeState>();
-	}else	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::GUARD).down)
+		return;
+	}
+	else	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::GUARD).down)
 	{
 		owner->ChangeState<GuardState>();
-	}else	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::ITEM).down)
+		return;
+	}
+	else	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::ITEM).down)
 	{
 		owner->ChangeState<ItemState>();
-	}else	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::LIGHTATTACK).down)
+		return;
+	}
+	else	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::LIGHTATTACK).down)
 	{
 		owner->RequestLightAttack();
+		return;
 	}
 
-	if(KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_FRONT).now||
-		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_RIGHT).now||
-		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_BACK).now||
+	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_FRONT).now ||
+		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_RIGHT).now ||
+		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_BACK).now ||
 		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_LEFT).now)
 	{
+		if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::SHIFT).now)
+		{
+			owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::RUN);
+			owner->GetRigidBody().SetMoveSpeed(1);
+		}
+		else
+		{
+			owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::WALK);
+			owner->GetRigidBody().SetMoveSpeed(0.5f);
+
+		}
 	}
 	else
 	{

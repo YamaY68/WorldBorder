@@ -7,11 +7,11 @@
 
 void SwordsMan_HeavyAttack1::Enter(CharactorBase* owner)
 {
-	idleTime_ = 120;
+	owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::HEAVY_ATTACK_1,false);
+	owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::HEAVY_ATTACK_1, 0.8f);
 	stateFrame_ = 0;
 	canChange_ = false;
 	nextInputStartTime_ = 60;
-	owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::HEAVY_ATTACK_1);
 }
 
 void SwordsMan_HeavyAttack1::HandleInput(PlayerBase* owner)
@@ -24,6 +24,25 @@ void SwordsMan_HeavyAttack1::HandleInput(PlayerBase* owner)
 
 void SwordsMan_HeavyAttack1::Update(CharactorBase* owner)
 {
+	if (stateFrame_ == 30)
+	{
+		owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::HEAVY_ATTACK_1, 1.5f);
+	}
+
+	if (stateFrame_ == 90)
+	{
+		owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::HEAVY_ATTACK_1, 0.5f);
+	}
+	if (stateFrame_ == 120)
+	{
+		owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::HEAVY_ATTACK_1, 1.2f);
+	}
+	if (stateFrame_ >= 80 && stateFrame_ <= 100)
+	{
+		auto f = owner->GetTransform().GetForward();
+		owner->GetTransform().pos = VAdd(owner->GetTransform().pos, VScale(f, 3));
+	}
+
 	if (owner->GetAnimationController()->IsEnd())
 	{
 		owner->ChangeState<IdleState>();

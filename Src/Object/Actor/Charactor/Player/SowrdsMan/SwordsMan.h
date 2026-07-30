@@ -29,6 +29,8 @@ public:
 		HEAVY_ATTACK_2,
 		HEAVY_ATTACK_3,
 
+		FINISH,
+
 	};
 
 	SwordsMan(void);

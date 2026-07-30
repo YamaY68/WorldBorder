@@ -9,11 +9,10 @@
 #include"../../../SowrdsMan/SwordsMan.h"
 void SwordsMan_LightAttack4::Enter(CharactorBase* owner)
 {
-	idleTime_ = 180;
+	owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::LIGHT_ATTACK_4,false);
 	stateFrame_ = 0;
 	canChange_ = false;
-	nextInputStartTime_ = 60;
-	owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::LIGHT_ATTACK_4);
+	nextInputStartTime_ = 30;
 }
 
 void SwordsMan_LightAttack4::HandleInput(PlayerBase* owner)
@@ -33,6 +32,14 @@ void SwordsMan_LightAttack4::HandleInput(PlayerBase* owner)
 
 void SwordsMan_LightAttack4::Update(CharactorBase* owner)
 {
+	if (stateFrame_ == 60)
+	{
+		owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::LIGHT_ATTACK_4, 0.2f);
+	}
+	if (stateFrame_ == 150)
+	{
+		owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::LIGHT_ATTACK_4, 1.0f);
+	}
 	if (owner->GetAnimationController()->IsEnd())
 	{
 		owner->ChangeState<IdleState>();

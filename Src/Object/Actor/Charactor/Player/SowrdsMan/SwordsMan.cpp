@@ -42,6 +42,7 @@ void SwordsMan::SubDraw(void)
 {
 	PlayerBase::SubDraw();
 	DrawFormatString(0, 10, 0xffffff, "State:%s", currentState_->GetName());
+	DrawFormatString(0, 20, 0xffffff, "frame:%d", currentState_->GetStateFrame());
 }
 
 void SwordsMan::SubRelease(void)
@@ -52,22 +53,24 @@ void SwordsMan::LoadAnimation(void)
 {
 	animationController_->Add((int)ANIM_TYPE::IDLE,30,ANIM_PATH+"Idle.mv1");
 	animationController_->Add((int)ANIM_TYPE::WALK, 30, ANIM_PATH + "Walk.mv1");
-	animationController_->Add((int)ANIM_TYPE::RUN, 30, ANIM_PATH + "Run.mv1");
+	animationController_->Add((int)ANIM_TYPE::RUN, 38, ANIM_PATH + "Run.mv1");
 	animationController_->Add((int)ANIM_TYPE::GUARD, 30, ANIM_PATH + "Guard.mv1");
 	animationController_->Add((int)ANIM_TYPE::EVADE, 30, ANIM_PATH + "Evade.mv1");
-	animationController_->Add((int)ANIM_TYPE::PARRY, 30, ANIM_PATH + "Parry.mv1");
+	animationController_->Add((int)ANIM_TYPE::BACK_EVADE, 30, ANIM_PATH + "BackEvade.mv1");
+	animationController_->Add((int)ANIM_TYPE::PARRY, 60, ANIM_PATH + "Parry.mv1");
 	animationController_->Add((int)ANIM_TYPE::BACK_EVADE, 30, ANIM_PATH + "BackEvade.mv1");
 	animationController_->Add((int)ANIM_TYPE::LEFT_STRAFE_WALK, 30, ANIM_PATH + "LeftStrafeWalk.mv1");
 	animationController_->Add((int)ANIM_TYPE::LEFT_STRAFE_RUN, 30, ANIM_PATH + "LeftStrafeRun.mv1");
 	animationController_->Add((int)ANIM_TYPE::RIGHT_STRAFE_WALK, 30, ANIM_PATH + "RightStrafeWalk.mv1");
 	animationController_->Add((int)ANIM_TYPE::RIGHT_STRAFE_RUN, 30, ANIM_PATH + "RightStrafeRun.mv1");
-	animationController_->Add((int)ANIM_TYPE::LIGHT_ATTACK_1, 60, ANIM_PATH + "LightAttack/LightAttack1.mv1");
-	animationController_->Add((int)ANIM_TYPE::LIGHT_ATTACK_2, 60, ANIM_PATH + "LightAttack/LightAttack2.mv1");
-	animationController_->Add((int)ANIM_TYPE::LIGHT_ATTACK_3, 60, ANIM_PATH + "LightAttack/LightAttack3.mv1");
-	animationController_->Add((int)ANIM_TYPE::LIGHT_ATTACK_4, 60, ANIM_PATH + "LightAttack/LightAttack4.mv1");
+	animationController_->Add((int)ANIM_TYPE::LIGHT_ATTACK_1, 90, ANIM_PATH + "LightAttack/LightAttack1.mv1");
+	animationController_->Add((int)ANIM_TYPE::LIGHT_ATTACK_2, 90, ANIM_PATH + "LightAttack/LightAttack2.mv1");
+	animationController_->Add((int)ANIM_TYPE::LIGHT_ATTACK_3, 90, ANIM_PATH + "LightAttack/LightAttack3.mv1");
+	animationController_->Add((int)ANIM_TYPE::LIGHT_ATTACK_4, 90, ANIM_PATH + "LightAttack/LightAttack4.mv1");
 	animationController_->Add((int)ANIM_TYPE::HEAVY_ATTACK_1, 60, ANIM_PATH + "HeavyAttack/HeavyAttack1.mv1");
 	animationController_->Add((int)ANIM_TYPE::HEAVY_ATTACK_2, 60, ANIM_PATH + "HeavyAttack/HeavyAttack2.mv1");
 	animationController_->Add((int)ANIM_TYPE::HEAVY_ATTACK_3, 60, ANIM_PATH + "HeavyAttack/HeavyAttack3.mv1");
+	animationController_->Add((int)ANIM_TYPE::FINISH, 60, ANIM_PATH + "FinishAttack/Finish.mv1");
 }
 
 

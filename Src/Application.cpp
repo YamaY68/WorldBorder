@@ -96,6 +96,7 @@ void Application::Init(void)
 	SceneManager::GetInstance().SetSceneFactory(SCENE_ID::RESULT, []() {return std::make_shared<ResultScene>(); });
 	SceneManager::GetInstance().Init();
 	// ネットワーク管理初期化
+	
 }
 
 void Application::Run(void)
@@ -171,4 +172,5 @@ void Application::InitEffekseer(void)
 	if (Effekseer_Init(8000) == -1) {
 		DxLib_End();
 	}
+	
 }

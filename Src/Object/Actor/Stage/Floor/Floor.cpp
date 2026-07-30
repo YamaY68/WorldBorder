@@ -14,10 +14,12 @@ Floor::~Floor(void)
 
 void Floor::SubLoad(void)
 {
+	trans_.modelId = MV1LoadModel("Data/Model/Stage/Stage.mv1");
 }
 
 void Floor::SubInit(void)
 {
+	trans_.scl = VGet(2, 0.5, 2);
 	trans_.pos = { 0,0,0 };
 	rigidBody_.SetBodyType(RigidBody::BodyType::STATIC);
 

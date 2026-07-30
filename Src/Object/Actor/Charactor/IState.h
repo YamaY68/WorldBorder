@@ -18,9 +18,7 @@ public:
 	virtual void Exit(CharactorBase* owner) = 0;
 
 	void InCreaseStateFrame(void) { stateFrame_++; }
-	void DecreaseIdleTime(void) { idleTime_--; }
 
-	int GetIdleTime(void) const { return idleTime_; }
 	const char* GetName(void) { return typeid(*this).name(); }
 	bool GetIsLoop(void) const { return isLoop_; }
 	int GetNextInputStartTime(void) { return nextInputStartTime_; }
@@ -30,7 +28,6 @@ protected:
 
 	bool canChange_ = false;
 	bool isLoop_ = false;
-	int idleTime_ = 0;
 	int stateFrame_ = 0;
 	int nextInputStartTime_=0;
 };

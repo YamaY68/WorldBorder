@@ -9,11 +9,10 @@
 #include"../../../SowrdsMan/SwordsMan.h"
 void SwordsMan_LightAttack2::Enter(CharactorBase* owner)
 {
-	idleTime_ = 180;
+	owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::LIGHT_ATTACK_2,false);
 	stateFrame_ = 0;
 	canChange_ = false;
-	nextInputStartTime_ = 60;
-	owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::LIGHT_ATTACK_2);
+	nextInputStartTime_ = 30;
 }
 
 void SwordsMan_LightAttack2::HandleInput(PlayerBase* owner)
@@ -41,6 +40,23 @@ void SwordsMan_LightAttack2::HandleInput(PlayerBase* owner)
 
 void SwordsMan_LightAttack2::Update(CharactorBase* owner)
 {
+	if (stateFrame_ == 1)
+	{
+		owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::LIGHT_ATTACK_2, 0.8f);
+	}
+	if (stateFrame_ == 40)
+	{
+		owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::LIGHT_ATTACK_2, 1.3f);
+	}
+	if (stateFrame_ == 50)
+	{
+		owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::LIGHT_ATTACK_2, 0.3f);
+	}
+	if (stateFrame_ >= 40 && stateFrame_ <= 60)
+	{
+		auto f = owner->GetTransform().GetForward();
+		owner->GetTransform().pos = VAdd(owner->GetTransform().pos, VScale(f, -2));
+	}
 	if (owner->GetAnimationController()->IsEnd())
 	{
 		owner->ChangeState<IdleState>();

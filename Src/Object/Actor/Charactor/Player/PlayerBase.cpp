@@ -28,11 +28,10 @@ void PlayerBase::SubInit(void)
 void PlayerBase::SubUpdate(void)
 {
 	currentState_->HandleInput(this);
-	currentState_->DecreaseIdleTime();
-	if (currentState_->GetIdleTime() <= 0 &&!currentState_->GetIsLoop())
-	{
-		ReturnToIdle();
-	}
+	//if (currentState_->GetIdleTime() <= 0 &&!currentState_->GetIsLoop())
+	//{
+	//	ReturnToIdle();
+	//}
 	if (currentState_->GetStateFrame() >= currentState_->GetNextInputStartTime())
 	{
 		currentState_->OnCanChange();
