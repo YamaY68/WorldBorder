@@ -1,59 +1,62 @@
 #pragma once
 #include <string>
 #include <map>
+#include <vector>
 
 class AnimationController
 {
 public:
 
-	// アニメーションデータ
+	// ① 速度を変化させる区間データ（割合：0.0 ? 1.0）
+	struct SpeedRange
+	{
+		float startRate;   // 開始割合（例: 0.2 = 全体の20%地点）
+		float endRate;     // 終了割合（例: 0.5 = 全体の50%地点）
+		float rate;        // その区間の速度倍率
+	};
+
 	struct Animation
 	{
 		int model = -1;
 		int attachNo = -1;
 		int animIndex = 0;
-		float speed = 0.0f;          // 最終的な再生速度（初期速度 × 外部倍率）[cite: 2]
-		float baseSpeed = 0.0f;      // 登録時の初期速度を保持
-		float speedRate = 1.0f;      // 外から掛ける速度の倍率
+		float speed = 0.0f;
+		float baseSpeed = 0.0f;
+		float speedRate = 1.0f;
 		float totalTime = 0.0f;
 		float step = 0.0f;
+
+		std::vector<SpeedRange> speedRanges;
 	};
-	// コンストラクタ
+
 	AnimationController(int modelId);
-	// デストラクタ
 	~AnimationController(void);
 
-	//外部FBXからアニメーションを追加
 	void Add(int type, float speed, const std::string path);
-
-	// 同じFBX内のアニメーションを準備
 	void AddInFbx(int type, float speed, int animIndex);
 
-	// アニメーション再生
+	// ② 外から「割合（0.0?1.0）」で速度変更区間を追加する関数
+	void AddSpeedRange(int type, float startRate, float endRate, float rate);
+
 	void Play(int type, bool isloop = true);
 	void Update(void);
 	void Release(void);
 
-	// 外からアニメーションの速度倍率を変更する関数
-	void SetAnimSpeedRate(int type, float rate);
-	void SetCurrentAnimSpeedRate(float rate); // 再生中のものだけ変更する場合
+	float GetTotalTime(void) const;
+	float GetCurrentStep(void) const;
+	// （クラス内の public 部分に追加）
+	float GetProgressRate(void) const; // 現在の進捗割合（0.0 ? 1.0）を取得
+	
+	
+	int GetPlayType(void) const;
+	bool IsEnd(void) const;
 
-	int GetPlayType(void) const;			//再生中のアニメーション
-	bool IsEnd(void) const;		//再生終了
-
-	float GetTotalTime(void) const;       // 現在再生中のアニメーションの総時間を取得
-	float GetCurrentStep(void) const;     // 現在の再生時間（step）を取得
 private:
-	// アニメーションするモデルのハンドルID
 	int modelId_;
-	// 種類別のアニメーションデータ
 	std::map<int, Animation> animations_;
-	// 再生中のアニメーション
 	int playType_;
 	Animation playAnim_;
-
 	bool loopFlg_;
 
-	// アニメーション追加の共通処理
 	void Add(int type, float speed, Animation& animation);
 };

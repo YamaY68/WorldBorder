@@ -31,6 +31,7 @@ void SwordsMan::SubLoad(void)
 void SwordsMan::SubInit(void)
 {
 	PlayerBase::SubInit();
+	InitAnimation();
 }
 
 void SwordsMan::SubUpdate(void)
@@ -91,6 +92,15 @@ void SwordsMan::InitCollider(void)
 void SwordsMan::InitRigidBody(void)
 {
 	rigidBody_.SetUseGravity(true);
+}
+
+void SwordsMan::InitAnimation(void)
+{
+	animationController_->AddSpeedRange((int)ANIM_TYPE::LIGHT_ATTACK_1, 0, 0.2, 0.5f);
+	animationController_->AddSpeedRange((int)ANIM_TYPE::LIGHT_ATTACK_1, 0.2, 0.8, 1.2f);
+	animationController_->AddSpeedRange((int)ANIM_TYPE::LIGHT_ATTACK_1, 0.8, 1, 0.5f);
+
+
 }
 
 void SwordsMan::RequestLightAttack(void)

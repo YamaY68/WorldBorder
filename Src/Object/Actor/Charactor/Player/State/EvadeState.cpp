@@ -24,8 +24,6 @@ void EvadeState::Enter(CharactorBase* owner)
 	{
 	owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::EVADE,false);
 	}
-	owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::BACK_EVADE, 2);
-	owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::EVADE, 2);
 	stateFrame_ = 0;
 	canChange_ = false;
 	nextInputStartTime_ = 60;

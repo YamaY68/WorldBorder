@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
+#include<memory>
 #include"Common/Vector2.h"
+class FPS;
 class Application
 {
 
@@ -50,7 +52,7 @@ private:
 
 	// 静的インスタンス
 	static Application* instance_;
-	
+	std::unique_ptr<FPS>fps_;
 	// 終了要求
 	bool isRequestedExit_;
 

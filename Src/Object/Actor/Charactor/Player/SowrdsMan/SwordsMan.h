@@ -48,6 +48,7 @@ private:
 	void LoadAnimation(void)override;
 	void InitCollider(void) override;
 	void InitRigidBody(void) override;
+	void InitAnimation(void);
 
 	void CreateAttack(void)override;
 	void ReturnToIdle(void)override;

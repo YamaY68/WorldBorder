@@ -22,19 +22,6 @@ void SwordsMan_FinishAttack::HandleInput(PlayerBase* owner)
 
 void SwordsMan_FinishAttack::Update(CharactorBase* owner)
 {
-	if (stateFrame_ == 1)
-	{
-		owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::FINISH, 1.5);
-	}
-	if (stateFrame_ == 40)
-	{
-		owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::FINISH, 0.15f);
-	}
-	if (stateFrame_ == 80)
-	{
-		owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::FINISH, 1.4f);
-	}
-
 	if (stateFrame_ >= 110&&stateFrame_<=130)
 	{
 		auto f=owner->GetTransform().GetForward();

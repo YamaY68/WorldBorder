@@ -36,20 +36,6 @@ void SwordsMan_LightAttack3::HandleInput(PlayerBase* owner)
 }
 void SwordsMan_LightAttack3::Update(CharactorBase* owner)
 {
-	if (stateFrame_ == 20)
-	{
-		owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::LIGHT_ATTACK_3, 0.7f);
-	}
-	if (stateFrame_ == 40)
-	{
-		owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::LIGHT_ATTACK_3, 1.4f);
-
-	}
-	if (stateFrame_ == 115)
-	{
-		owner->GetAnimationController()->SetAnimSpeedRate((int)SwordsMan::ANIM_TYPE::LIGHT_ATTACK_3, 0.05f);
-
-	}
 
 	if (stateFrame_ >= 40 && stateFrame_ <= 60)
 	{

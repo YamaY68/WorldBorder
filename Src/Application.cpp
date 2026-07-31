@@ -11,6 +11,7 @@
 #include"Scene/GameScene/GameScene.h"
 #include"Scene/ResultScene.h"
 #include"Scene/PlayerSelect/PlayerSelect.h"
+#include"Manager/Generic/FPS.h"
 Application* Application::instance_ = nullptr;
 
 const std::string Application::PATH_DATA = "Data/";
@@ -84,7 +85,8 @@ void Application::Init(void)
 	// 入力制御初期化
 	SetUseDirectInputFlag(true);
 	KEY::CreateIns();
-
+	fps_ = std::make_unique<FPS>();
+	fps_->Init();
 
 	// シーン管理初期化
 	SceneManager::CreateInstance();
@@ -108,9 +110,10 @@ void Application::Run(void)
 	// ゲームループ
 	while (ProcessMessage() == 0 && !isRequestedExit_)
 	{
-
+		if (!fps_->UpdateFrameRate())continue;
 		keymanager.Update();
 		sceneManager.Update();
+		fps_->DrawFrameRate();
 		sceneManager.Draw();
 
 		ScreenFlip();
