@@ -38,11 +38,15 @@ void PlayerBase::SubUpdate(void)
 	}
 	CharactorBase::SubUpdate();
 	currentState_->InCreaseStateFrame();
-
+	if(comboBufferTimer_>0)
+			{
+		comboBufferTimer_--;
+	}
 }
 
 void PlayerBase::SubDraw(void)
 {
+	DrawFormatString(0, 40, 0xffffff, "%d", comboBufferTimer_);
 }
 
 void PlayerBase::SubRelease(void)

@@ -51,4 +51,10 @@ void SwordsMan_LightAttack3::Update(CharactorBase* owner)
 
 void SwordsMan_LightAttack3::Exit(CharactorBase* owner)
 {
+	auto player = dynamic_cast<PlayerBase*>(owner);
+	if (player)
+	{
+		player->SetNextComboChoices((int)SwordsMan::ANIM_TYPE::LIGHT_ATTACK_4, (int)SwordsMan::ANIM_TYPE::HEAVY_ATTACK_3);
+		player->SetComboBuffer(30);
+	}
 }

@@ -28,9 +28,9 @@ void IdleState::HandleInput(PlayerBase* owner)
 	}else	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::ITEM).down)
 	{
 		owner->ChangeState<ItemState>();
-	}else	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::LIGHTATTACK).down)
+	}else	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::LIGHTATTACK).down||KEY::GetIns().GetInfo(KEY::KEY_TYPE::HEAVYATTACK).down)
 	{
-		owner->RequestLightAttack();
+		owner->RequestAttack();
 	}
 }
 

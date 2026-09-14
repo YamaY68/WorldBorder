@@ -43,7 +43,7 @@ public:
 	void SubRelease(void) override;
 
 
-	void RequestLightAttack(void)override;
+	void RequestAttack(void)override;
 private:
 	void LoadAnimation(void)override;
 	void InitCollider(void) override;

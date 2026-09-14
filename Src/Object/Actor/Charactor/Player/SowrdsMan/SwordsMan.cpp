@@ -103,9 +103,49 @@ void SwordsMan::InitAnimation(void)
 
 }
 
-void SwordsMan::RequestLightAttack(void)
+void SwordsMan::RequestAttack(void)
 {
+	if (comboBufferTimer_ <= 0)
+	{
 	ChangeState<SwordsMan_LightAttack1>();
+	}
+	else
+	{
+		int target = -1;
+		if (isLightAttack_)
+		{
+			target = nextLightAttackType_;
+			if (target == (int)ANIM_TYPE::LIGHT_ATTACK_2)
+			{
+				ChangeState<SwordsMan_LightAttack2>();
+			}
+			if (target == (int)ANIM_TYPE::LIGHT_ATTACK_3)
+			{
+				ChangeState<SwordsMan_LightAttack3>();
+			}
+			if (target == (int)ANIM_TYPE::LIGHT_ATTACK_4)
+			{
+				ChangeState<SwordsMan_LightAttack4>();
+			}
+		}
+		else
+		{
+			target = nextHeavyAttackType_;
+			if (target == (int)ANIM_TYPE::HEAVY_ATTACK_1)
+			{
+				ChangeState<SwordsMan_HeavyAttack1>();
+			}
+			if (target == (int)ANIM_TYPE::HEAVY_ATTACK_2)
+			{
+				ChangeState<SwordsMan_HeavyAttack2>();
+			}
+			if (target == (int)ANIM_TYPE::HEAVY_ATTACK_3)
+			{
+				ChangeState<SwordsMan_HeavyAttack3>();
+			}
+		}
+		ClearCombo();
+	}
 }
 
 void SwordsMan::CreateAttack(void)

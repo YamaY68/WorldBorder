@@ -40,6 +40,9 @@ void AnimationController::Play(int type, bool isloop)
 {
 	if (playType_ == type) return;
 
+	// ブレンドリストをクリアして単体に戻す
+	ClearBlendAnims();
+
 	if (playType_ != -1)
 	{
 		playAnim_.speedRate = 1.0f;
@@ -73,7 +76,112 @@ void AnimationController::Play(int type, bool isloop)
 
 	// アニメーション総時間の取得
 	playAnim_.totalTime = MV1GetAttachAnimTotalTime(modelId_, playAnim_.attachNo);
+	playAnim_.duration = GetTotalTime();
 }
+
+void AnimationController::SetBlendAnim(int type, float weight, bool isloop)
+{
+	if (animations_.count(type) == 0) return;
+
+	// すでに同じタイプがブレンド中か探す
+	auto it = std::find_if(blendAnims_.begin(), blendAnims_.end(), [type](const ActiveBlendAnim& b) {
+		return b.type == type;
+		});
+
+	if (it != blendAnims_.end()) {
+		// すでに存在する場合はウェイトのみ更新
+		it->weight = std::clamp(weight, 0.0f, 1.0f);
+		MV1SetAttachAnimBlendRate(modelId_, it->anim.attachNo, it->weight);
+	}
+	else {
+		// 新規にブレンド対象として追加
+		ActiveBlendAnim newBlend;
+		newBlend.type = type;
+		newBlend.anim = animations_[type];
+		newBlend.weight = std::clamp(weight, 0.0f, 1.0f);
+		newBlend.isLoop = isloop;
+		newBlend.anim.speedRate = 1.0f;
+		newBlend.anim.step = 0.0f;
+		newBlend.anim.speed = newBlend.anim.baseSpeed;
+
+		if (newBlend.anim.model == -1) {
+			newBlend.anim.attachNo = MV1AttachAnim(modelId_, newBlend.anim.animIndex);
+		}
+		else {
+			int animIdx = 0;
+			newBlend.anim.attachNo = MV1AttachAnim(modelId_, animIdx, newBlend.anim.model);
+		}
+
+		newBlend.anim.totalTime = MV1GetAttachAnimTotalTime(modelId_, newBlend.anim.attachNo);
+		MV1SetAttachAnimBlendRate(modelId_, newBlend.anim.attachNo, newBlend.weight);
+
+		blendAnims_.push_back(newBlend);
+	}
+}
+
+void AnimationController::RemoveBlendAnim(int type)
+{
+	auto it = std::remove_if(blendAnims_.begin(), blendAnims_.end(), [this, type](ActiveBlendAnim& b) {
+		if (b.type == type) {
+			if (b.anim.attachNo != -1) {
+				MV1DetachAnim(modelId_, b.anim.attachNo);
+			}
+			return true;
+		}
+		return false;
+		});
+	blendAnims_.erase(it, blendAnims_.end());
+}
+
+void AnimationController::ClearBlendAnims()
+{
+	for (auto& b : blendAnims_) {
+		if (b.anim.attachNo != -1) {
+			MV1DetachAnim(modelId_, b.anim.attachNo);
+		}
+	}
+	blendAnims_.clear();
+}
+
+void AnimationController::UpdateAnimInternal(Animation& anim, float deltaTime, bool isLoop)
+{
+	if (anim.attachNo == -1) return;
+
+	float currentProgress = 0.0f;
+	if (anim.totalTime > 0.0f) {
+		currentProgress = anim.step / anim.totalTime;
+		if (currentProgress > 1.0f) currentProgress = 1.0f;
+	}
+
+	float currentRate = 1.0f;
+	for (const auto& range : anim.speedRanges)
+	{
+		if (currentProgress >= range.startRate && currentProgress < range.endRate)
+		{
+			currentRate = range.rate;
+			break;
+		}
+	}
+
+	anim.speedRate = currentRate;
+	anim.speed = anim.baseSpeed * anim.speedRate;
+	anim.step += (deltaTime * anim.speed);
+
+	if (isLoop) {
+		if (anim.step > anim.totalTime) {
+			anim.step = fmod(anim.step, anim.totalTime);
+		}
+	}
+	else {
+		if (anim.step > anim.totalTime) {
+			anim.step = anim.totalTime;
+			anim.speedRate = 1.0f;
+		}
+	}
+
+	MV1SetAttachAnimTime(modelId_, anim.attachNo, anim.step);
+}
+
 void AnimationController::Update(void)
 {
 	float deltaTime = SceneManager::GetInstance().GetDeltaTime();
@@ -82,12 +190,11 @@ void AnimationController::Update(void)
 	float currentProgress = 0.0f;
 	if (playAnim_.totalTime > 0.0f) {
 		currentProgress = playAnim_.step / playAnim_.totalTime;
-		// 1.0を超える場合に備えてクランプ
 		if (currentProgress > 1.0f) currentProgress = 1.0f;
 	}
 
 	// 2. 登録された割合の区間に合致するかチェックして速度レートを決定する
-	float currentRate = 1.0f; // デフォルトは等倍
+	float currentRate = 1.0f;
 
 	for (const auto& range : playAnim_.speedRanges)
 	{
@@ -107,7 +214,7 @@ void AnimationController::Update(void)
 
 	if (loopFlg_) {
 		if (playAnim_.step > playAnim_.totalTime) {
-			playAnim_.step = 0.0f;
+			playAnim_.step = fmod(playAnim_.step, playAnim_.totalTime); // 剰余にしておくとオーバーしても安全です
 		}
 	}
 	else {
@@ -117,8 +224,22 @@ void AnimationController::Update(void)
 		}
 	}
 
-	// アニメーション設定
-	MV1SetAttachAnimTime(modelId_, playAnim_.attachNo, playAnim_.step);
+	// メインアニメーションの設定とウェイト適用
+	if (playAnim_.attachNo != -1) {
+		MV1SetAttachAnimTime(modelId_, playAnim_.attachNo, playAnim_.step);
+		MV1SetAttachAnimBlendRate(modelId_, playAnim_.attachNo, 1.0f); // メインのウェイトは1.0
+	}
+
+	// --- 【追加】4. ブレンド用アニメーションの更新とウェイト適用 ---
+	for (auto& b : blendAnims_) {
+		// 各ブレンドアニメーションの時間を進める（UpdateAnimInternal関数を使用）
+		UpdateAnimInternal(b.anim, deltaTime, b.isLoop);
+
+		// 設定されたウェイト（影響度）をDXライブラリに反映
+		if (b.anim.attachNo != -1) {
+			MV1SetAttachAnimBlendRate(modelId_, b.anim.attachNo, b.weight);
+		}
+	}
 }
 void AnimationController::Release(void)
 {
@@ -137,77 +258,35 @@ void AnimationController::Release(void)
 	animations_.clear();
 }
 
-// 現在再生中のアニメーションの総時間を取得する
-// 速度変化を考慮した、実際のトータルタイム（実時間）を取得する
 float AnimationController::GetTotalTime(void) const
 {
 	if (playType_ == -1) return 0.0f;
-
-	// 元のベースとなる総時間
 	float baseTotalTime = playAnim_.totalTime;
 	if (baseTotalTime <= 0.0f) return 0.0f;
+	if (playAnim_.speedRanges.empty()) return baseTotalTime;
 
-	// もし速度変更区間がなければ、そのままの総時間を返す
-	if (playAnim_.speedRanges.empty()) {
-		return baseTotalTime;
-	}
-
-	// 速度変化を考慮した実際の総時間を計算する
-	// ※ 割合（0.0?1.0）を基準に区間が設定されているため、
-	//   各区間の「時間の長さ（幅）」に「速度の逆数（1.0 / rate）」を掛けて足し合わせます。
 	float actualTotalTime = 0.0f;
-	float lastProcessedRate = 1.0f; // どの区間にも属さない部分のデフォルト速度（通常は1.0）
-
-	// 区間をスタート位置が早い順に並べ替えておくと安全（念のため）
-	// ※もし登録時にソートしていない場合は注意が必要ですが、ここでは計算ロジックを記述します。
-
-	// わかりやすくするために、0.0から1.0までの区間を隙間なく走査して積算する方法をとります。
-	// 細かく0.0?1.0を区切るか、あるいは「各区間の長さ × (1.0 / 速度)」で計算します。
-
-	float currentNormalizedPos = 0.0f; // 0.0 ? 1.0 の追跡用
-
-	// 簡易的かつ確実な計算方法：
-	// 全体を細かく見るか、あるいは登録された SpeedRange ごとに計算する
-	// ここでは、各 SpeedRange の区間ごとの実時間を積み上げるロジックにします。
-
-	// ※正確に計算するため、コピーを作成してソートするか、あらかじめ登録順が綺麗であることを前提とします
 	std::vector<SpeedRange> sortedRanges = playAnim_.speedRanges;
-
-	// ラムダ式で startRate の昇順にソート
 	std::sort(sortedRanges.begin(), sortedRanges.end(), [](const SpeedRange& a, const SpeedRange& b) {
 		return a.startRate < b.startRate;
-		});
+	});
 
 	float lastEndRate = 0.0f;
-
 	for (const auto& range : sortedRanges)
 	{
-		// 1. 前回の終わりから今回の区間の始まりまでの「隙間（速度1.0の区間）」があれば足す
 		if (range.startRate > lastEndRate) {
-			float gapLength = (range.startRate - lastEndRate) * baseTotalTime;
-			actualTotalTime += gapLength; // 速度1.0なのでそのまま足す
+			actualTotalTime += (range.startRate - lastEndRate) * baseTotalTime;
 		}
-
-		// 2. 今回の区間の長さ（ベース時間換算）
 		float rangeBaseLength = (range.endRate - range.startRate) * baseTotalTime;
-
-		// 速度が0以下の場合はゼロ除算を防ぐため安全策を入れる
 		float safeRate = (range.rate > 0.0001f) ? range.rate : 0.0001f;
-
-		// 速度が速いと時間は短くなり、遅い（スロー）と時間は長くなる（時間 = 距離 / 速度）
 		actualTotalTime += rangeBaseLength / safeRate;
-		lastEndRate = (lastEndRate > range.endRate) ? lastEndRate: range.endRate;
+		lastEndRate = (lastEndRate > range.endRate) ? lastEndRate : range.endRate;
 	}
-
-	// 3. 最後の区間から 1.0（100%）までの「残り（速度1.0の区間）」があれば足す
 	if (lastEndRate < 1.0f) {
-		float remainingLength = (1.0f - lastEndRate) * baseTotalTime;
-		actualTotalTime += remainingLength;
+		actualTotalTime += (1.0f - lastEndRate) * baseTotalTime;
 	}
-
 	return actualTotalTime;
-} 
-
+}
 // 現在の再生時間（step）を取得する
 float AnimationController::GetCurrentStep(void) const
 {
@@ -221,7 +300,7 @@ float AnimationController::GetProgressRate(void) const
 	if (playType_ == -1) return 0.0f;
 	if (playAnim_.totalTime <= 0.0f) return 0.0f;
 
-	float rate = playAnim_.step / playAnim_.totalTime;
+	float rate = playAnim_.step / playAnim_.duration;
 
 	// 1.0を超える場合に備えてクランプ
 	if (rate > 1.0f) rate = 1.0f;

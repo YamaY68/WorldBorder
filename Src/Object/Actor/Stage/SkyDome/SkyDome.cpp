@@ -6,7 +6,7 @@ SkyDome::SkyDome(void)
 
 void SkyDome::SubLoad(void)
 {
-	trans_.modelId = MV1LoadModel("Data/Model/SkyDome/sky.mv1");
+	//trans_.modelId = MV1LoadModel("Data/Model/SkyDome/sky.mv1");
 	trans_.scl = VGet(30, 30, 30);
 }
 

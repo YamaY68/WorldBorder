@@ -40,7 +40,7 @@ void GuardState::HandleInput(PlayerBase* owner)
 		}
 		else	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::LIGHTATTACK).down)
 		{
-			owner->RequestLightAttack();
+			owner->RequestAttack();
 		}
 		else
 		{
@@ -51,6 +51,18 @@ void GuardState::HandleInput(PlayerBase* owner)
 
 void GuardState::Update(CharactorBase* owner)
 {
+	if(KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_FRONT).now ||
+		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_LEFT).now ||
+		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_BACK).now ||
+		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_RIGHT).now)
+	{
+		owner->GetAnimationController()->SetBlendAnim((int)SwordsMan::ANIM_TYPE::WALK, 0.1f, true);
+	}
+	else
+	{
+		owner->GetAnimationController()->RemoveBlendAnim((int)SwordsMan::ANIM_TYPE::WALK);
+	}
+
 	if(KEY::GetIns().GetInfo(KEY::KEY_TYPE::GUARD).now)
 	{
 		canChange_ = false;

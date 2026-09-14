@@ -38,7 +38,7 @@ void ItemState::HandleInput(PlayerBase* owner)
 		}
 		else	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::LIGHTATTACK).down)
 		{
-			owner->RequestLightAttack();
+			owner->RequestAttack();
 		}
 		else
 		{
