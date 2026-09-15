@@ -12,7 +12,6 @@ void SwordsMan_LightAttack4::Enter(CharactorBase* owner)
 	owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::LIGHT_ATTACK_4,false);
 	stateFrame_ = 0;
 	canChange_ = false;
-	nextInputStartTime_ = 30;
 }
 
 void SwordsMan_LightAttack4::HandleInput(PlayerBase* owner)
@@ -40,4 +39,5 @@ void SwordsMan_LightAttack4::Update(CharactorBase* owner)
 
 void SwordsMan_LightAttack4::Exit(CharactorBase* owner)
 {
+
 }

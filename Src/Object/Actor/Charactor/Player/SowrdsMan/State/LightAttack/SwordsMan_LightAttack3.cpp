@@ -12,7 +12,7 @@ void SwordsMan_LightAttack3::Enter(CharactorBase* owner)
 	owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::LIGHT_ATTACK_3,false);
 	stateFrame_ = 0;
 	canChange_ = false;
-	nextInputStartTime_ = 30;
+	nextInputStartTime_ = 0.4f*owner->GetAnimationController()->GetTotalTime();
 }
 
 void SwordsMan_LightAttack3::HandleInput(PlayerBase* owner)
@@ -55,6 +55,6 @@ void SwordsMan_LightAttack3::Exit(CharactorBase* owner)
 	if (player)
 	{
 		player->SetNextComboChoices((int)SwordsMan::ANIM_TYPE::LIGHT_ATTACK_4, (int)SwordsMan::ANIM_TYPE::HEAVY_ATTACK_3);
-		player->SetComboBuffer(30);
+		player->SetComboBuffer(10);
 	}
 }

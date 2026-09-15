@@ -218,8 +218,8 @@ void AnimationController::Update(void)
 		}
 	}
 	else {
-		if (playAnim_.step > playAnim_.totalTime) {
-			playAnim_.step = playAnim_.totalTime;
+		if (playAnim_.step > playAnim_.duration) {
+			playAnim_.step = playAnim_.duration;
 			playAnim_.speedRate = 1.0f;
 		}
 	}
@@ -316,7 +316,7 @@ bool AnimationController::IsEnd(void) const
 		return ret;
 	}
 
-	if (playAnim_.step >= playAnim_.totalTime) {
+	if (playAnim_.step >= playAnim_.duration) {
 		return true;
 	}
 

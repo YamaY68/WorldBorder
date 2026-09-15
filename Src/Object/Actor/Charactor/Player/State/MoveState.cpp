@@ -20,10 +20,10 @@ void MoveState::HandleInput(PlayerBase* owner)
 	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::EVADE).down)
 	{
 		auto* evateState = dynamic_cast<EvadeState*>(owner->GetState<EvadeState>());
-		if (AsoUtility::Equals(owner->GetTransform().GetForward(), SceneManager::GetInstance().GetCamera().GetForward()))
-		{
-			return;
-		}
+		//if (AsoUtility::Equals(owner->GetTransform().GetForward(), SceneManager::GetInstance().GetCamera().GetForward()))
+		//{
+		//	return;
+		//}
 		evateState->SetEvadeDirection(moveVec_);
 		owner->ChangeState<EvadeState>();
 		return;
@@ -52,7 +52,7 @@ void MoveState::HandleInput(PlayerBase* owner)
 		if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::SHIFT).now)
 		{
 			owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::RUN);
-			owner->GetRigidBody().SetMoveSpeed(1);
+			owner->GetRigidBody().SetMoveSpeed(2.5);
 		}
 		else
 		{

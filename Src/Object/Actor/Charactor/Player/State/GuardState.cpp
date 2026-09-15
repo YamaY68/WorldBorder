@@ -56,12 +56,30 @@ void GuardState::Update(CharactorBase* owner)
 		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_BACK).now ||
 		KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_RIGHT).now)
 	{
-		owner->GetAnimationController()->SetBlendAnim((int)SwordsMan::ANIM_TYPE::WALK, 0.1f, true);
+		owner->GetAnimationController()->SetBlendAnim((int)SwordsMan::ANIM_TYPE::WALK, 0.3f, true);
 	}
 	else
 	{
 		owner->GetAnimationController()->RemoveBlendAnim((int)SwordsMan::ANIM_TYPE::WALK);
 	}
+
+	VECTOR moveVec = { 0.0f,0.0f,0.0f };
+
+	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_FRONT).now) moveVec.z += 1.0f;
+	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_BACK).now) moveVec.z -= 1.0f;
+	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_RIGHT).now) moveVec.x += 1.0f;
+	if (KEY::GetIns().GetInfo(KEY::KEY_TYPE::MOVE_LEFT).now) moveVec.x -= 1.0f;
+
+	const VECTOR cameraAngle = SceneManager::GetInstance().GetCamera().GetAngles();
+	MATRIX camYaw = MGetRotY(cameraAngle.y);
+	moveVec = VTransform(moveVec, camYaw);
+
+	if (VSize(moveVec) > 0.0f)
+	{
+		moveVec = VNorm(moveVec);
+	}
+	//owner->GetTransform().quaRot = Quaternion::Euler(VGet(0, atan2f(moveVec.x, moveVec.z), 0.0f));
+	owner->GetTransform().pos = VAdd(owner->GetTransform().pos, VScale(moveVec, owner->GetRigidBody().GetMoveSpeed()*0.5f));
 
 	if(KEY::GetIns().GetInfo(KEY::KEY_TYPE::GUARD).now)
 	{

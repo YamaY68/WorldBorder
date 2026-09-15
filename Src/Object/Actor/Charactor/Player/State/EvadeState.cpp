@@ -18,7 +18,8 @@ void EvadeState::Enter(CharactorBase* owner)
 {
 	if (AsoUtility::Equals(evadeDirection_,SceneManager::GetInstance().GetCamera().GetForward())||AsoUtility::EqualsVZero(evadeDirection_))
 	{
-		owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::BACK_EVADE, false);
+		//owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::BACK_EVADE, false);
+		owner->GetAnimationController()->Play((int)SwordsMan::ANIM_TYPE::EVADE, false);
 	}
 	else
 	{
@@ -39,29 +40,29 @@ void EvadeState::Update(CharactorBase* owner)
 	auto& pos = owner->GetTransform().pos;
 	if (AsoUtility::Equals(evadeDirection_, SceneManager::GetInstance().GetCamera().GetForward()))
 	{
-		auto f=owner->GetTransform().GetForward();
-		pos = VAdd(pos, VScale(VScale(owner->GetTransform().GetForward(), -1), 1.2));
-		if (stateFrame_ < 20)
-		{
-		owner->GetRigidBody().AddForce({ 0.0f,2.0f,0.0f });
-		}
-		else
-		{
-			owner->GetRigidBody().AddForce({ 0.0f,-1.0f,0.0f });
-		}
+		//auto f=owner->GetTransform().GetForward();
+		//pos = VAdd(pos, VScale(VScale(owner->GetTransform().GetForward(), -1), 1.2));
+		//if (stateFrame_ < 20)
+		//{
+		//owner->GetRigidBody().AddForce({ 0.0f,2.0f,0.0f });
+		//}
+		//else
+		//{
+		//	owner->GetRigidBody().AddForce({ 0.0f,-1.0f,0.0f });
+		//}
 
 	}
 	else
 	{
-		if (stateFrame_ < 20)
-		{
-		owner->GetRigidBody().AddForce({ 0.0f,1.5f,0.0f });
-		}
-		else
-		{
-			owner->GetRigidBody().AddForce({ 0.0f,-1.0f,0.0f });
-		}
-		pos = VAdd(pos, VScale(evadeDirection_, 1.8));
+		//if (stateFrame_ < 20)
+		//{
+		//owner->GetRigidBody().AddForce({ 0.0f,1.5f,0.0f });
+		//}
+		//else
+		//{
+		//	owner->GetRigidBody().AddForce({ 0.0f,-1.0f,0.0f });
+		//}
+		pos = VAdd(pos, VScale(evadeDirection_, 3.8));
 	}
 	if (owner->GetAnimationController()->IsEnd())
 	{
